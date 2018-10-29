@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" style="color:#CB212E;font-weight:bold;font-size:4vmin" [routerLink]="['/RestaurantsComponent']">Zomato</a>
+</nav>
+<div *ngIf="userReview!=0" >
+  <div *ngIf="restaurantData.featured_image;else customImage" width="100%" height="100px" class="bg-light">
+    <img src={{restaurantData.featured_image}} style="height:40vmin;display: block;margin-left: auto;margin-right:auto; overflow: hidden;">
+  </div>
+  <ng-template #customImage>
+    <div width="100%" height="100px" class="bg-light">
+      <img src="../assets/icon.png" style="height:40vmin;display: block;margin-left: auto;margin-right:auto; overflow: hidden;">
+    </div>
+  </ng-template>
+  <div class="container-fluid text-center" style="margin-top:3%">
+      <h2>{{restaurantData.name | uppercase}}</h2>
+  </div>
+  
+    <div class="col-md-12 text-center" style="margin-top:3%" >    
+          <h5>Average Cost For Two : {{restaurantData.currency}}{{restaurantData.average_cost_for_two}}</h5>
+          <h5>Address : {{restaurantData.location.address}}</h5>
+          <h5>User Rating : {{restaurantData.user_rating.aggregate_rating}}</h5>
+          <h5>Events : <a  style="color:#CB212E;" href={{restaurantData.events_url}}>click to see Events</a></h5>
+          <h5>Menu : <a  style="color:#CB212E;" href={{restaurantData.menu_url}}>Menu Of {{restaurantData.name}}</a></h5>
+          <h5>Album : <a  style="color:#CB212E;" href={{restaurantData.photos_url}}>Album Of {{restaurantData.name}}</a></h5>
+          <h5>Url Link : <a  style="color:#CB212E;" href={{restaurantData.url}}>Visit Page Of {{restaurantData.name}}</a></h5>
+    </div>
+    <div class="col-md-12 text-center bg-light" style="margin-top:3%">
+      <hr><h3>Reviews</h3><hr>
+    </div>
+    <div *ngFor="let review of userReview">
+    <div class="col-md-12">
+      <h6 class="float-right " style="color:#D5212E">{{review.review.review_time_friendly}}</h6>
+      <br>
+      <h5>Customer Comment :{{review.review.review_text}}</h5>
+      <div class="row">
+      <h6 class="col-md-6">Rating Text : {{review.review.rating_text}}</h6>
+      <h6 class="col-md-6">Rating :{{review.review.rating}}</h6>
+      </div>
+    </div>
+    <hr>
+    </div>
+</div>

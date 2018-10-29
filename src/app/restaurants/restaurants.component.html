@@ -1,0 +1,46 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="navbar-nav mr-auto">  
+          <a class="navbar-brand" style="color:#CB212E;font-weight:bold;font-size:4vmin" >Zomato</a>
+      </div>
+      <ng-container *ngIf="restaurantToggel">
+        <form class="form-inline" (ngSubmit)="searchRestaurants()">
+          <input class="form-control  mr-sm-1" type="text" name="RestaurantName" [(ngModel)]="RestaurantName" placeholder="Restraunt Name" >
+          <button type="submit" value="Submit" class="btn btn-outline-danger mr-sm-1">Find Restaurant</button> </form>
+        <button type="submit" value="Submit" (click)="toggle()" class="btn btn-outline-light bg-danger mr-sm-1">{{locationHint}}</button>
+      </ng-container>
+      <ng-container *ngIf="locationToggel">
+        <form class="form-inline my-2 my-lg-0" (ngSubmit)="changeLocation()">
+          <input class="form-control  mr-sm-1" type="text" name="location" [(ngModel)]="location" placeholder={{locationHint}} required>
+          <button type="submit" value="Submit" class="btn btn-outline-danger mr-sm-1">Change Location</button>
+        </form>
+        <button type="submit" value="Submit" (click)="setCurrenLocation()" class="btn btn-outline-danger  mr-sm-1">current Location</button>
+        <button type="submit" value="Submit" (click)="toggle()" class="btn btn-outline-danger  mr-sm-1">Cancel</button>
+      </ng-container>
+    </div>
+  </nav>
+<div  class="card-group" *ngIf="restaurants!=0;else noRestaurants">
+  <div *ngFor="let restaurant of restaurants" class="col-md-3 " style="margin-top:2%">
+       <img *ngIf="restaurant.restaurant.featured_image" class="card-img-top" height="150vmax" src={{restaurant.restaurant.featured_image}} >
+       <img *ngIf="!restaurant.restaurant.featured_image" class="card-img-top" height="150vmax" src="../assets/icon.png">
+       <div class="card-body">
+          <h6 class="  float-center ">{{restaurant.restaurant.name}} </h6>
+          <h6 class="  float-center ">Address : {{restaurant.restaurant.location.address}} </h6>
+          <h6 class="  float-center ">Cost For Two : {{restaurant.restaurant.currency}} {{restaurant.restaurant.average_cost_for_two}} </h6>
+          <a [routerLink]="['/detailview',restaurant.restaurant.R.res_id]" class="btn btn-outline-danger float-center">See More... </a>
+       </div>
+    </div>
+    
+  </div>
+  <ng-template #noRestaurants>
+      <div class="col-sm-12 text-center" style="margin-top:40%">
+    <h2 style="color:lightgray">No Restaurants Found With This Name</h2>
+    </div>
+  </ng-template>
+
